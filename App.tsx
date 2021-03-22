@@ -2,8 +2,11 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components/native";
+import "./firebase";
 import Storage from "./storage";
 import Api from "./api";
+import firestore from "./storage/firestore";
+import dayjs from "dayjs";
 
 const StyledButton = styled.TouchableOpacity`
   padding: 10px 30px;
@@ -52,13 +55,20 @@ export default function App() {
   }, [numbers]);
 
   const getRandomNumber = () => {
-    api.getRandomNumber(1, 1000).then((response) => {
-      const { random } = response[0];
+    api
+      .getRandomNumber(1, 1000)
+      .then((response) => {
+        const { random } = response[0];
 
-      if (random) {
-        setNumbers((state) => [random, ...state]);
-      }
-    }).catch(console.log);
+        if (random) {
+          setNumbers((state) => [random, ...state]);
+          firestore.setItem({
+            randomNumber: random,
+            timestamp: dayjs().unix(),
+          });
+        }
+      })
+      .catch(console.log);
   };
 
   return (
