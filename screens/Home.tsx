@@ -77,7 +77,7 @@ function HomeScreen() {
             firestore.setItem({
               randomNumber: random,
               timestamp: dayjs().unix(),
-              uid: currentUser.uid,
+              userId: currentUser.uid,
             });
           }
         }
