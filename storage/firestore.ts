@@ -9,11 +9,14 @@ class Firestore {
     this.key = key;
   }
 
-  getItem(): Promise<firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
+  getItem(
+    userId: string
+  ): Promise<firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
     const app = firebase.app(FIREBASE_APP);
 
     return firestore(app)
       .collection(this.key)
+      .where("userId", "==", userId)
       .orderBy("timestamp", "desc")
       .get();
   }

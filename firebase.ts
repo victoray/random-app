@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
+import "firebase/auth";
 import { FIREBASE_APP } from "./constants";
 
 // Initialize Firebase
