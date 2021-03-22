@@ -5,6 +5,7 @@ import HistoryList from "../components/HistoryList";
 import { RandomNumber } from "../types";
 import * as firebase from "firebase";
 import { FIREBASE_APP } from "../constants";
+import useAuthentication from "../api/useAuthentication";
 
 const HistoryScreen: FC<{ navigation: StackNavigationProp<any> }> = ({
   navigation,
@@ -12,16 +13,7 @@ const HistoryScreen: FC<{ navigation: StackNavigationProp<any> }> = ({
   const [calculatorHistory, setCalculatorHistory] = useState<RandomNumber[]>(
     []
   );
-  const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
-
-  useEffect(() => {
-    const app = firebase.app(FIREBASE_APP);
-    const user = firebase.auth(app).currentUser;
-
-    if (user) {
-      setCurrentUser(user);
-    }
-  }, []);
+  const currentUser = useAuthentication();
 
   useEffect(() => {
     const onFocus = () => {
@@ -42,7 +34,7 @@ const HistoryScreen: FC<{ navigation: StackNavigationProp<any> }> = ({
     return () => {
       navigation.removeListener("focus", onFocus);
     };
-  }, []);
+  }, [currentUser]);
 
   if (!currentUser) {
     return null;

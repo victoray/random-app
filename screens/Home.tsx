@@ -6,8 +6,7 @@ import firestore from "../storage/firestore";
 import dayjs from "dayjs";
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import * as firebase from "firebase";
-import { FIREBASE_APP } from "../constants";
+import useAuthentication from "../api/useAuthentication";
 
 const StyledButton = styled.TouchableOpacity`
   padding: 10px 30px;
@@ -40,16 +39,7 @@ const api = new Api();
 
 function HomeScreen() {
   const [numbers, setNumbers] = useState<number[]>([]);
-  const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
-
-  useEffect(() => {
-    const app = firebase.app(FIREBASE_APP);
-    const user = firebase.auth(app).currentUser;
-
-    if (user) {
-      setCurrentUser(user);
-    }
-  }, []);
+  const currentUser = useAuthentication();
 
   useEffect(() => {
     //   load data
