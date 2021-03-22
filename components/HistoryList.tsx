@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import { RandomNumber } from "../types";
 
 export const StyledView = styled.View`
-  background-color: #121212;
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -13,7 +12,6 @@ export const StyledView = styled.View`
 
 const StyledTitle = styled.Text`
   font-size: 32px;
-  color: white;
   font-weight: bold;
 `;
 
@@ -21,7 +19,6 @@ const StyledText = styled.Text`
   font-size: 15px;
   font-weight: 500;
   margin-left: 15px;
-  color: white;
 `;
 
 const StyledContainer = styled.View`
@@ -36,8 +33,8 @@ const StyledContainer = styled.View`
 
 const StyledHistoryItem = styled.View`
   margin: 10px;
-  background-color: #262626;
   padding: 8px;
+  background-color: lightgrey;
 `;
 
 const styles = StyleSheet.create({
@@ -63,8 +60,10 @@ const HistoryList: FC<{
           data={randomNumbers}
           renderItem={({ item, index }) => (
             <StyledHistoryItem key={index}>
-              <StyledText>RandomNumber: {item.randomNumber}</StyledText>
-              <StyledText>Date: {dayjs(item.timestamp).format()}</StyledText>
+              <StyledText>Random Number: {item.randomNumber}</StyledText>
+              <StyledText>
+                Date: {dayjs.unix(item.timestamp).format("MMMM DD, YYYY HH:mm")}
+              </StyledText>
             </StyledHistoryItem>
           )}
         />

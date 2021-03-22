@@ -10,7 +10,7 @@ class Firestore {
   }
 
   getItem(): Promise<firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
-    const app = firebase.app("CalculatorApp");
+    const app = firebase.app(FIREBASE_APP);
 
     return firestore(app)
       .collection(this.key)
